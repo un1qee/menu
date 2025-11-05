@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школьная столовая - Сбалансированное питание</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+        }
+        
+        nav {
+            background-color: #1B5E20;
+            padding: 0.8rem;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: #4CAF50;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .page {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        h1, h2, h3 {
+            color: #2E7D32;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(rgba(76, 175, 80, 0.1), rgba(46, 125, 50, 0.1));
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: #E8F5E9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-icon {
+            font-size: 1.5rem;
+        }
+        
+        .menu-generator {
+            background: #E8F5E9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #388E3C;
+        }
+        
+        select {
+            padding: 0.7rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+        
+        .generated-menu {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .menu-category {
+            margin-bottom: 1.5rem;
+        }
+        
+        .menu-category h3 {
+            color: #1B5E20;
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu-item {
+            padding: 0.5rem;
+            border-bottom: 1px dashed #E0E0E0;
+        }
+        
+        .suggestions-list {
+            margin-top: 1.5rem;
+        }
+        
+        .suggestion {
+            background: #F1F8E9;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .suggestion-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .suggestion-category {
+            color: #2E7D32;
+            font-size: 0.9rem;
+        }
+        
+        .add-suggestion {
+            background: #E8F5E9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        footer {
+            background-color: #1B5E20;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🍎</div>
+            <h1>Школьная столовая "Здоровое питание"</h1>
+        </div>
+        <p>Сбалансированное питание для успешной учебы</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#" class="nav-link active" data-page="home">Главная</a></li>
+            <li><a href="#" class="nav-link" data-page="menu">Генератор меню</a></li>
+            <li><a href="#" class="nav-link" data-page="suggestions">Предложения</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <!-- Главная страница -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h2>Здоровое питание - залог успешной учебы!</h2>
+                <p>Мы заботимся о том, чтобы каждый школьник получал сбалансированное и вкусное питание</p>
+            </div>
+            
+            <h2>Почему сбалансированное меню важно?</h2>
+            
+            <div class="info-cards">
+                <div class="card">
+                    <h3><span class="card-icon">🧠</span> Улучшает концентрацию</h3>
+                    <p>Правильное питание помогает школьникам лучше концентрироваться на уроках, улучшает память и способствует успешному усвоению материала.</p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">💪</span> Поддерживает энергию</h3>
+                    <p>Сбалансированные приемы пищи обеспечивают равномерное поступление энергии в течение всего учебного дня, предотвращая усталость.</p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🩺</span> Укрепляет здоровье</h3>
+                    <p>Правильное питание укрепляет иммунитет, способствует правильному развитию организма и предотвращает различные заболевания.</p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">📚</span> Формирует привычки</h3>
+                    <p>Школьное питание помогает формировать у детей правильные пищевые привычки, которые сохранятся на всю жизнь.</p>
+                </div>
+            </div>
+            
+            <h2>Наши принципы питания</h2>
+            <p>Мы придерживаемся строгих стандартов при составлении меню для школьной столовой:</p>
+            
+            <ul>
+                <li>Используем только свежие и качественные продукты</li>
+                <li>Соблюдаем баланс белков, жиров и углеводов</li>
+                <li>Учитываем возрастные потребности детей</li>
+                <li>Предлагаем разнообразные блюда каждый день</li>
+                <li>Следим за содержанием витаминов и минералов</li>
+                <li>Минимизируем использование сахара и вредных добавок</li>
+            </ul>
+        </section>
+        
+        <!-- Генератор меню -->
+        <section id="menu" class="page">
+            <h2>Генератор сбалансированного меню</h2>
+            <p>Создайте идеальное меню для школьной столовой на любой день недели!</p>
+            
+            <div class="menu-generator">
+                <div class="controls">
+                    <select id="day-select">
+                        <option value="monday">Понедельник</option>
+                        <option value="tuesday">Вторник</option>
+                        <option value="wednesday">Среда</option>
+                        <option value="thursday">Четверг</option>
+                        <option value="friday">Пятница</option>
+                    </select>
+                    
+                    <select id="age-group">
+                        <option value="elementary">Младшие классы (1-4)</option>
+                        <option value="middle">Средние классы (5-8)</option>
+                        <option value="high">Старшие классы (9-11)</option>
+                    </select>
+                    
+                    <button id="generate-btn">Сгенерировать меню</button>
+                </div>
+                
+                <div class="generated-menu" id="generated-menu">
+                    <p>Выберите параметры и нажмите "Сгенерировать меню"</p>
+                </div>
+            </div>
+            
+            <h3>Польза нашего меню</h3>
+            <p>Каждое сгенерированное меню соответствует рекомендациям диетологов и содержит:</p>
+            
+            <ul>
+                <li>Необходимое количество калорий для возрастной группы</li>
+                <li>Оптимальное соотношение белков, жиров и углеводов</li>
+                <li>Витамины и минералы для поддержания здоровья</li>
+                <li>Разнообразные блюда для развития вкусовых предпочтений</li>
+            </ul>
+        </section>
+        
+        <!-- Предложения -->
+        <section id="suggestions" class="page">
+            <h2>Предложения и отзывы</h2>
+            <p>Мы ценим мнение наших учеников, родителей и учителей. Ваши предложения помогают нам становиться лучше!</p>
+            
+            <div class="suggestions-list" id="suggestions-list">
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span>Мария Иванова (родитель)</span>
+                        <span class="suggestion-category">Предложение</span>
+                    </div>
+                    <p>Хотелось бы видеть в меню больше свежих овощей в виде салатов. Дети часто отказываются от тушеных овощей, но с удовольствием едят свежие.</p>
+                </div>
+                
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span>Петр Сидоров (ученик 8Б)</span>
+                        <span class="suggestion-category">Отзыв</span>
+                    </div>
+                    <p>Мне нравятся котлеты в столовой, но хотелось бы, чтобы порции были немного больше, особенно для старшеклассников.</p>
+                </div>
+                
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span>Ольга Петрова (учитель)</span>
+                        <span class="suggestion-category">Предложение</span>
+                    </div>
+                    <p>Предлагаю ввести дни национальной кухни, чтобы знакомить детей с кулинарными традициями разных народов.</p>
+                </div>
+            </div>
+            
+            <div class="add-suggestion">
+                <h3>Добавить ваше предложение</h3>
+                <form id="suggestion-form">
+                    <div class="form-group">
+                        <label for="name">Ваше имя:</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="role">Вы:</label>
+                        <select id="role" required>
+                            <option value="">Выберите категорию</option>
+                            <option value="student">Ученик</option>
+                            <option value="parent">Родитель</option>
+                            <option value="teacher">Учитель</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="suggestion-type">Тип сообщения:</label>
+                        <select id="suggestion-type" required>
+                            <option value="">Выберите тип</option>
+                            <option value="suggestion">Предложение</option>
+                            <option value="review">Отзыв</option>
+                            <option value="complaint">Жалоба</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Ваше сообщение:</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Школьная столовая "Здоровое питание"</p>
+        <p>© 2023 Все права защищены</p>
+        <p>Контактная информация: school-cafe@example.com | тел.: +7 (XXX) XXX-XX-XX</p>
+    </footer>
+
+    <script>
+        // Навигация между страницами
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Убираем активный класс у всех ссылок
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                // Добавляем активный класс текущей ссылке
+                this.classList.add('active');
+                
+                // Скрываем все страницы
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Показываем выбранную страницу
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+        
+        // Данные для генерации меню
+        const menuData = {
+            elementary: {
+                monday: {
+                    breakfast: ["Каша овсяная с ягодами", "Бутерброд с сыром", "Какао"],
+                    lunch: ["Суп овощной", "Котлета куриная с гречкой", "Салат из свежих овощей", "Компот из сухофруктов"],
+                    snack: ["Йогурт", "Печенье"]
+                },
+                tuesday: {
+                    breakfast: ["Омлет", "Бутерброд с маслом", "Чай с лимоном"],
+                    lunch: ["Борщ", "Тефтели с картофельным пюре", "Салат из капусты", "Кисель ягодный"],
+                    snack: ["Фрукты", "Кекс"]
+                },
+                wednesday: {
+                    breakfast: ["Творожная запеканка", "Бутерброд с ветчиной", "Какао"],
+                    lunch: ["Суп-лапша куриный", "Рыба запеченная с рисом", "Салат морковный", "Сок"],
+                    snack: ["Пирожок с яблоком", "Чай"]
+                },
+                thursday: {
+                    breakfast: ["Манная каша", "Бутерброд с сыром", "Чай"],
+                    lunch: ["Щи", "Гуляш с макаронами", "Салат из свеклы", "Компот"],
+                    snack: ["Булочка", "Молоко"]
+                },
+                friday: {
+                    breakfast: ["Блинчики с творогом", "Бутерброд с маслом", "Какао"],
+                    lunch: ["Уха", "Курица тушеная с овощами", "Салат витаминный", "Сок"],
+                    snack: ["Фруктовый салат", "Печенье"]
+                }
+            },
+            middle: {
+                monday: {
+                    breakfast: ["Каша гречневая", "Бутерброд с сыром и ветчиной", "Чай"],
+                    lunch: ["Суп гороховый", "Котлета говяжья с рисом", "Салат из свежих овощей", "Компот"],
+                    snack: ["Йогурт", "Булочка"]
+                },
+                tuesday: {
+                    breakfast: ["Омлет с овощами", "Бутерброд с маслом", "Какао"],
+                    lunch: ["Борщ с мясом", "Тефтели с картофельным пюре", "Салат из капусты и моркови", "Кисель"],
+                    snack: ["Фрукты", "Печенье"]
+                },
+                wednesday: {
+                    breakfast: ["Сырники со сметаной", "Бутерброд с колбасой", "Чай"],
+                    lunch: ["Суп куриный с вермишелью", "Рыба запеченная с картофелем", "Салат овощной", "Сок"],
+                    snack: ["Пирожок с капустой", "Чай"]
+                },
+                thursday: {
+                    breakfast: ["Каша пшенная", "Бутерброд с сыром", "Какао"],
+                    lunch: ["Суп овощной", "Гуляш с гречкой", "Салат из свеклы с чесноком", "Компот"],
+                    snack: ["Булочка с изюмом", "Молоко"]
+                },
+                friday: {
+                    breakfast: ["Блинчики с мясом", "Бутерброд с маслом", "Чай"],
+                    lunch: ["Рассольник", "Курица запеченная с овощами", "Салат витаминный", "Сок"],
+                    snack: ["Фруктовый салат", "Печенье овсяное"]
+                }
+            },
+            high: {
+                monday: {
+                    breakfast: ["Каша овсяная с орехами и медом", "Бутерброд с сыром и ветчиной", "Кофе с молоком"],
+                    lunch: ["Суп грибной", "Котлета по-киевски с рисом", "Салат греческий", "Компот"],
+                    snack: ["Йогурт", "Булочка", "Чай"]
+                },
+                tuesday: {
+                    breakfast: ["Омлет с сыром и помидорами", "Бутерброд с маслом", "Какао"],
+                    lunch: ["Борщ с пампушками", "Тефтели в томатном соусе с картофельным пюре", "Салат из свежих овощей", "Кисель"],
+                    snack: ["Фрукты", "Печенье шоколадное"]
+                },
+                wednesday: {
+                    breakfast: ["Сырники с вареньем", "Бутерброд с колбасой", "Чай"],
+                    lunch: ["Суп-пюре из тыквы", "Рыба под маринадом с картофелем", "Салат овощной", "Сок"],
+                    snack: ["Пирожок с мясом", "Чай"]
+                },
+                thursday: {
+                    breakfast: ["Каша гречневая с грибами", "Бутерброд с сыром", "Кофе с молоком"],
+                    lunch: ["Суп харчо", "Плов", "Салат из свеклы с черносливом", "Компот"],
+                    snack: ["Булочка с маком", "Молоко"]
+                },
+                friday: {
+                    breakfast: ["Блинчики с красной икрой", "Бутерброд с маслом", "Чай"],
+                    lunch: ["Солянка", "Курица в сливочном соусе с овощами", "Салат цезарь", "Сок"],
+                    snack: ["Фруктовый салат", "Печенье"]
+                }
+            }
+        };
+        
+        // Генерация меню
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const day = document.getElementById('day-select').value;
+            const ageGroup = document.getElementById('age-group').value;
+            const menuContainer = document.getElementById('generated-menu');
+            
+            const menu = menuData[ageGroup][day];
+            const dayNames = {
+                monday: "Понедельник",
+                tuesday: "Вторник",
+                wednesday: "Среда",
+                thursday: "Четверг",
+                friday: "Пятница"
+            };
+            
+            let menuHTML = `<h3>Меню на ${dayNames[day]} (${document.getElementById('age-group').options[document.getElementById('age-group').selectedIndex].text})</h3>`;
+            
+            menuHTML += `<div class="menu-category">
+                <h3>Завтрак</h3>`;
+            menu.breakfast.forEach(item => {
+                menuHTML += `<div class="menu-item">${item}</div>`;
+            });
+            menuHTML += `</div>`;
+            
+            menuHTML += `<div class="menu-category">
+                <h3>Обед</h3>`;
+            menu.lunch.forEach(item => {
+                menuHTML += `<div class="menu-item">${item}</div>`;
+            });
+            menuHTML += `</div>`;
+            
+            menuHTML += `<div class="menu-category">
+                <h3>Полдник</h3>`;
+            menu.snack.forEach(item => {
+                menuHTML += `<div class="menu-item">${item}</div>`;
+            });
+            menuHTML += `</div>`;
+            
+            menuContainer.innerHTML = menuHTML;
+        });
+        
+        // Обработка формы предложений
+        document.getElementById('suggestion-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const role = document.getElementById('role').value;
+            const type = document.getElementById('suggestion-type').value;
+            const message = document.getElementById('message').value;
+            
+            const roleNames = {
+                student: "ученик",
+                parent: "родитель",
+                teacher: "учитель"
+            };
+            
+            const typeNames = {
+                suggestion: "Предложение",
+                review: "Отзыв",
+                complaint: "Жалоба"
+            };
+            
+            const suggestionHTML = `
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span>${name} (${roleNames[role]})</span>
+                        <span class="suggestion-category">${typeNames[type]}</span>
+                    </div>
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            document.getElementById('suggestions-list').insertAdjacentHTML('afterbegin', suggestionHTML);
+            
+            // Очистка формы
+            document.getElementById('suggestion-form').reset();
+            
+            alert('Спасибо за ваше предложение! Мы его рассмотрим.');
+        });
+    </script>
+</body>
+</html>

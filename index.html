@@ -188,6 +188,40 @@
             border-bottom: 1px dashed #E0E0E0;
         }
         
+        .nutrition-info {
+            background: #F1F8E9;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .nutrition-values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .nutrition-value {
+            text-align: center;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .nutrition-value .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .nutrition-value .label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
         .suggestions-list {
             margin-top: 1.5rem;
         }
@@ -198,7 +232,6 @@
             border-radius: 8px;
             margin-bottom: 1rem;
             border-left: 4px solid #4CAF50;
-            position: relative;
         }
         
         .suggestion-header {
@@ -211,29 +244,6 @@
         .suggestion-category {
             color: #2E7D32;
             font-size: 0.9rem;
-        }
-        
-        .suggestion-date {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 0.5rem;
-        }
-        
-        .suggestion-rating {
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .star {
-            color: #FFC107;
-            font-size: 1.2rem;
-        }
-        
-        .empty-star {
-            color: #E0E0E0;
-            font-size: 1.2rem;
         }
         
         .add-suggestion {
@@ -266,36 +276,12 @@
             resize: vertical;
         }
         
-        .rating-input {
-            display: flex;
-            gap: 5px;
-            margin-top: 0.5rem;
-        }
-        
-        .rating-input span {
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #E0E0E0;
-            transition: color 0.2s;
-        }
-        
-        .rating-input span:hover,
-        .rating-input span.active {
-            color: #FFC107;
-        }
-        
         footer {
             background-color: #1B5E20;
             color: white;
             text-align: center;
             padding: 1.5rem;
             margin-top: 2rem;
-        }
-        
-        .no-suggestions {
-            text-align: center;
-            padding: 2rem;
-            color: #666;
         }
         
         @media (max-width: 768px) {
@@ -306,6 +292,10 @@
             
             .controls {
                 flex-direction: column;
+            }
+            
+            .nutrition-values {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -385,7 +375,6 @@
                         <option value="wednesday">Среда</option>
                         <option value="thursday">Четверг</option>
                         <option value="friday">Пятница</option>
-                        <option value="saturday">Суббота</option>
                     </select>
                     
                     <select id="age-group">
@@ -419,11 +408,33 @@
             <p>Мы ценим мнение наших учеников, родителей и учителей. Ваши предложения помогают нам становиться лучше!</p>
             
             <div class="suggestions-list" id="suggestions-list">
-                <!-- Отзывы будут загружаться здесь -->
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span>Мария Иванова (родитель)</span>
+                        <span class="suggestion-category">Предложение</span>
+                    </div>
+                    <p>Хотелось бы видеть в меню больше свежих овощей в виде салатов. Дети часто отказываются от тушеных овощей, но с удовольствием едят свежие.</p>
+                </div>
+                
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span>Петр Сидоров (ученик 8Б)</span>
+                        <span class="suggestion-category">Отзыв</span>
+                    </div>
+                    <p>Мне нравятся котлеты в столовой, но хотелось бы, чтобы порции были немного больше, особенно для старшеклассников.</p>
+                </div>
+                
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span>Ольга Петрова (учитель)</span>
+                        <span class="suggestion-category">Предложение</span>
+                    </div>
+                    <p>Предлагаю ввести дни национальной кухни, чтобы знакомить детей с кулинарными традициями разных народов.</p>
+                </div>
             </div>
             
             <div class="add-suggestion">
-                <h3>Добавить ваш отзыв</h3>
+                <h3>Добавить ваше предложение</h3>
                 <form id="suggestion-form">
                     <div class="form-group">
                         <label for="name">Ваше имя:</label>
@@ -451,23 +462,11 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Оценка:</label>
-                        <div class="rating-input" id="rating-input">
-                            <span data-value="1">★</span>
-                            <span data-value="2">★</span>
-                            <span data-value="3">★</span>
-                            <span data-value="4">★</span>
-                            <span data-value="5">★</span>
-                        </div>
-                        <input type="hidden" id="rating" value="0" required>
-                    </div>
-                    
-                    <div class="form-group">
                         <label for="message">Ваше сообщение:</label>
                         <textarea id="message" required></textarea>
                     </div>
                     
-                    <button type="submit">Отправить отзыв</button>
+                    <button type="submit">Отправить</button>
                 </form>
             </div>
         </section>
@@ -475,7 +474,7 @@
     
     <footer>
         <p>Школьная столовая "Здоровое питание"</p>
-        <p>© 2025 Все права защищены</p>
+        <p>© 2023 Все права защищены</p>
         <p>Контактная информация: school-cafe@example.com | тел.: +7 (XXX) XXX-XX-XX</p>
     </footer>
 
@@ -498,85 +497,276 @@
                 // Показываем выбранную страницу
                 const pageId = this.getAttribute('data-page');
                 document.getElementById(pageId).classList.add('active');
-                
-                // Если открыта страница с отзывами, загружаем их
-                if (pageId === 'suggestions') {
-                    loadSuggestions();
-                }
             });
         });
         
-        // Данные для генерации меню
+        // Данные для генерации меню с КБЖУ
         const menuData = {
             elementary: {
                 monday: {
-                    breakfast: ["Каша овсяная с ягодами", "Бутерброд с сыром", "Какао"],
-                    lunch: ["Суп овощной", "Котлета куриная с гречкой", "Салат из свежих овощей", "Компот из сухофруктов"]
+                    breakfast: [
+                        {name: "Каша овсяная с ягодами", calories: 150, protein: 5, fat: 3, carbs: 25},
+                        {name: "Бутерброд с сыром", calories: 120, protein: 6, fat: 5, carbs: 15},
+                        {name: "Какао", calories: 80, protein: 3, fat: 2, carbs: 12}
+                    ],
+                    lunch: [
+                        {name: "Суп овощной", calories: 100, protein: 3, fat: 2, carbs: 18},
+                        {name: "Котлета куриная с гречкой", calories: 250, protein: 18, fat: 8, carbs: 30},
+                        {name: "Салат из свежих овощей", calories: 50, protein: 1, fat: 0, carbs: 10},
+                        {name: "Компот из сухофруктов", calories: 60, protein: 0, fat: 0, carbs: 15}
+                    ],
+                    snack: [
+                        {name: "Йогурт", calories: 100, protein: 4, fat: 2, carbs: 15},
+                        {name: "Печенье", calories: 80, protein: 1, fat: 3, carbs: 12}
+                    ]
                 },
                 tuesday: {
-                    breakfast: ["Омлет", "Бутерброд с маслом", "Чай с лимоном"],
-                    lunch: ["Борщ", "Тефтели с картофельным пюре", "Салат из капусты", "Кисель ягодный"]
+                    breakfast: [
+                        {name: "Омлет", calories: 180, protein: 12, fat: 10, carbs: 5},
+                        {name: "Бутерброд с маслом", calories: 100, protein: 3, fat: 5, carbs: 12},
+                        {name: "Чай с лимоном", calories: 10, protein: 0, fat: 0, carbs: 2}
+                    ],
+                    lunch: [
+                        {name: "Борщ", calories: 120, protein: 5, fat: 4, carbs: 15},
+                        {name: "Тефтели с картофельным пюре", calories: 280, protein: 15, fat: 10, carbs: 35},
+                        {name: "Салат из капусты", calories: 40, protein: 1, fat: 0, carbs: 8},
+                        {name: "Кисель ягодный", calories: 70, protein: 0, fat: 0, carbs: 17}
+                    ],
+                    snack: [
+                        {name: "Фрукты", calories: 80, protein: 1, fat: 0, carbs: 20},
+                        {name: "Кекс", calories: 120, protein: 2, fat: 4, carbs: 20}
+                    ]
                 },
                 wednesday: {
-                    breakfast: ["Творожная запеканка", "Бутерброд с ветчиной", "Какао"],
-                    lunch: ["Суп-лапша куриный", "Рыба запеченная с рисом", "Салат морковный", "Сок"]
+                    breakfast: [
+                        {name: "Творожная запеканка", calories: 200, protein: 12, fat: 8, carbs: 20},
+                        {name: "Бутерброд с ветчиной", calories: 110, protein: 6, fat: 5, carbs: 12},
+                        {name: "Какао", calories: 80, protein: 3, fat: 2, carbs: 12}
+                    ],
+                    lunch: [
+                        {name: "Суп-лапша куриный", calories: 130, protein: 8, fat: 4, carbs: 16},
+                        {name: "Рыба запеченная с рисом", calories: 220, protein: 16, fat: 6, carbs: 25},
+                        {name: "Салат морковный", calories: 45, protein: 1, fat: 0, carbs: 10},
+                        {name: "Сок", calories: 90, protein: 1, fat: 0, carbs: 22}
+                    ],
+                    snack: [
+                        {name: "Пирожок с яблоком", calories: 150, protein: 3, fat: 5, carbs: 25},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ]
                 },
                 thursday: {
-                    breakfast: ["Манная каша", "Бутерброд с сыром", "Чай"],
-                    lunch: ["Щи", "Гуляш с макаронами", "Салат из свеклы", "Компот"]
+                    breakfast: [
+                        {name: "Манная каша", calories: 140, protein: 4, fat: 3, carbs: 25},
+                        {name: "Бутерброд с сыром", calories: 120, protein: 6, fat: 5, carbs: 15},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ],
+                    lunch: [
+                        {name: "Щи", calories: 110, protein: 4, fat: 3, carbs: 16},
+                        {name: "Гуляш с макаронами", calories: 270, protein: 16, fat: 9, carbs: 32},
+                        {name: "Салат из свеклы", calories: 50, protein: 1, fat: 0, carbs: 11},
+                        {name: "Компот", calories: 60, protein: 0, fat: 0, carbs: 15}
+                    ],
+                    snack: [
+                        {name: "Булочка", calories: 130, protein: 4, fat: 3, carbs: 22},
+                        {name: "Молоко", calories: 120, protein: 6, fat: 5, carbs: 9}
+                    ]
                 },
                 friday: {
-                    breakfast: ["Блинчики с творогом", "Бутерброд с маслом", "Какао"],
-                    lunch: ["Уха", "Курица тушеная с овощами", "Салат витаминный", "Сок"]
-                },
-                saturday: {
-                    breakfast: ["Вареники ленивые со сметаной", "Бутерброд с сыром", "Чай"],
-                    lunch: ["Суп-пюре из брокколи", "Котлета рыбная с картофельным пюре", "Салат из огурцов и помидоров", "Компот"]
+                    breakfast: [
+                        {name: "Блинчики с творогом", calories: 220, protein: 10, fat: 8, carbs: 28},
+                        {name: "Бутерброд с маслом", calories: 100, protein: 3, fat: 5, carbs: 12},
+                        {name: "Какао", calories: 80, protein: 3, fat: 2, carbs: 12}
+                    ],
+                    lunch: [
+                        {name: "Уха", calories: 100, protein: 8, fat: 3, carbs: 8},
+                        {name: "Курица тушеная с овощами", calories: 200, protein: 18, fat: 8, carbs: 12},
+                        {name: "Салат витаминный", calories: 60, protein: 2, fat: 0, carbs: 12},
+                        {name: "Сок", calories: 90, protein: 1, fat: 0, carbs: 22}
+                    ],
+                    snack: [
+                        {name: "Фруктовый салат", calories: 70, protein: 1, fat: 0, carbs: 17},
+                        {name: "Печенье", calories: 80, protein: 1, fat: 3, carbs: 12}
+                    ]
                 }
             },
             middle: {
                 monday: {
-                    lunch: ["Суп гороховый", "Котлета говяжья с рисом", "Салат из свежих овощей", "Компот"]
+                    breakfast: [
+                        {name: "Каша гречневая", calories: 160, protein: 6, fat: 3, carbs: 30},
+                        {name: "Бутерброд с сыром и ветчиной", calories: 150, protein: 9, fat: 7, carbs: 15},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ],
+                    lunch: [
+                        {name: "Суп гороховый", calories: 140, protein: 8, fat: 4, carbs: 20},
+                        {name: "Котлета говяжья с рисом", calories: 320, protein: 20, fat: 12, carbs: 35},
+                        {name: "Салат из свежих овощей", calories: 50, protein: 1, fat: 0, carbs: 10},
+                        {name: "Компот", calories: 60, protein: 0, fat: 0, carbs: 15}
+                    ],
+                    snack: [
+                        {name: "Йогурт", calories: 100, protein: 4, fat: 2, carbs: 15},
+                        {name: "Булочка", calories: 130, protein: 4, fat: 3, carbs: 22}
+                    ]
                 },
                 tuesday: {
-                    lunch: ["Борщ с мясом", "Тефтели с картофельным пюре", "Салат из капусты и моркови", "Кисель"]
+                    breakfast: [
+                        {name: "Омлет с овощами", calories: 200, protein: 14, fat: 12, carbs: 8},
+                        {name: "Бутерброд с маслом", calories: 100, protein: 3, fat: 5, carbs: 12},
+                        {name: "Какао", calories: 80, protein: 3, fat: 2, carbs: 12}
+                    ],
+                    lunch: [
+                        {name: "Борщ с мясом", calories: 150, protein: 10, fat: 6, carbs: 18},
+                        {name: "Тефтели с картофельным пюре", calories: 300, protein: 16, fat: 12, carbs: 38},
+                        {name: "Салат из капусты и моркови", calories: 45, protein: 1, fat: 0, carbs: 9},
+                        {name: "Кисель", calories: 70, protein: 0, fat: 0, carbs: 17}
+                    ],
+                    snack: [
+                        {name: "Фрукты", calories: 80, protein: 1, fat: 0, carbs: 20},
+                        {name: "Печенье", calories: 80, protein: 1, fat: 3, carbs: 12}
+                    ]
                 },
                 wednesday: {
-                    lunch: ["Суп куриный с вермишелью", "Рыба запеченная с картофелем", "Салат овощной", "Сок"]
+                    breakfast: [
+                        {name: "Сырники со сметаной", calories: 250, protein: 14, fat: 10, carbs: 25},
+                        {name: "Бутерброд с колбасой", calories: 130, protein: 6, fat: 7, carbs: 12},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ],
+                    lunch: [
+                        {name: "Суп куриный с вермишелью", calories: 140, protein: 9, fat: 5, carbs: 17},
+                        {name: "Рыба запеченная с картофелем", calories: 280, protein: 18, fat: 8, carbs: 32},
+                        {name: "Салат овощной", calories: 55, protein: 2, fat: 0, carbs: 11},
+                        {name: "Сок", calories: 90, protein: 1, fat: 0, carbs: 22}
+                    ],
+                    snack: [
+                        {name: "Пирожок с капустой", calories: 160, protein: 4, fat: 6, carbs: 24},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ]
                 },
                 thursday: {
-                    lunch: ["Суп овощной", "Гуляш с гречкой", "Салат из свеклы с чесноком", "Компот"]
+                    breakfast: [
+                        {name: "Каша пшенная", calories: 170, protein: 5, fat: 4, carbs: 32},
+                        {name: "Бутерброд с сыром", calories: 120, protein: 6, fat: 5, carbs: 15},
+                        {name: "Какао", calories: 80, protein: 3, fat: 2, carbs: 12}
+                    ],
+                    lunch: [
+                        {name: "Суп овощной", calories: 100, protein: 3, fat: 2, carbs: 18},
+                        {name: "Гуляш с гречкой", calories: 290, protein: 18, fat: 10, carbs: 35},
+                        {name: "Салат из свеклы с чесноком", calories: 55, protein: 2, fat: 0, carbs: 12},
+                        {name: "Компот", calories: 60, protein: 0, fat: 0, carbs: 15}
+                    ],
+                    snack: [
+                        {name: "Булочка с изюмом", calories: 150, protein: 4, fat: 4, carbs: 26},
+                        {name: "Молоко", calories: 120, protein: 6, fat: 5, carbs: 9}
+                    ]
                 },
                 friday: {
-                    lunch: ["Рассольник", "Курица запеченная с овощами", "Салат витаминный", "Сок"]
-                },
-                saturday: {
-                    lunch: ["Суп грибной", "Плов с курицей", "Салат из свежих овощей", "Компот"]
+                    breakfast: [
+                        {name: "Блинчики с мясом", calories: 240, protein: 12, fat: 9, carbs: 26},
+                        {name: "Бутерброд с маслом", calories: 100, protein: 3, fat: 5, carbs: 12},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ],
+                    lunch: [
+                        {name: "Рассольник", calories: 130, protein: 7, fat: 4, carbs: 17},
+                        {name: "Курица запеченная с овощами", calories: 230, protein: 20, fat: 9, carbs: 15},
+                        {name: "Салат витаминный", calories: 60, protein: 2, fat: 0, carbs: 12},
+                        {name: "Сок", calories: 90, protein: 1, fat: 0, carbs: 22}
+                    ],
+                    snack: [
+                        {name: "Фруктовый салат", calories: 70, protein: 1, fat: 0, carbs: 17},
+                        {name: "Печенье овсяное", calories: 90, protein: 2, fat: 3, carbs: 15}
+                    ]
                 }
             },
             high: {
                 monday: {
-                    lunch: ["Суп грибной", "Котлета по-киевски с рисом", "Салат греческий", "Компот"]
+                    breakfast: [
+                        {name: "Каша овсяная с орехами и медом", calories: 220, protein: 8, fat: 8, carbs: 32},
+                        {name: "Бутерброд с сыром и ветчиной", calories: 150, protein: 9, fat: 7, carbs: 15},
+                        {name: "Кофе с молоком", calories: 40, protein: 2, fat: 2, carbs: 5}
+                    ],
+                    lunch: [
+                        {name: "Суп грибной", calories: 120, protein: 5, fat: 5, carbs: 15},
+                        {name: "Котлета по-киевски с рисом", calories: 380, protein: 22, fat: 18, carbs: 35},
+                        {name: "Салат греческий", calories: 120, protein: 4, fat: 9, carbs: 8},
+                        {name: "Компот", calories: 60, protein: 0, fat: 0, carbs: 15}
+                    ],
+                    snack: [
+                        {name: "Йогурт", calories: 100, protein: 4, fat: 2, carbs: 15},
+                        {name: "Булочка", calories: 130, protein: 4, fat: 3, carbs: 22},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ]
                 },
                 tuesday: {
-                    lunch: ["Борщ с пампушками", "Тефтели в томатном соусе с картофельным пюре", "Салат из свежих овощей", "Кисель"]
+                    breakfast: [
+                        {name: "Омлет с сыром и помидорами", calories: 230, protein: 16, fat: 15, carbs: 8},
+                        {name: "Бутерброд с маслом", calories: 100, protein: 3, fat: 5, carbs: 12},
+                        {name: "Какао", calories: 80, protein: 3, fat: 2, carbs: 12}
+                    ],
+                    lunch: [
+                        {name: "Борщ с пампушками", calories: 180, protein: 8, fat: 7, carbs: 22},
+                        {name: "Тефтели в томатном соусе с картофельным пюре", calories: 350, protein: 18, fat: 14, carbs: 40},
+                        {name: "Салат из свежих овощей", calories: 50, protein: 1, fat: 0, carbs: 10},
+                        {name: "Кисель", calories: 70, protein: 0, fat: 0, carbs: 17}
+                    ],
+                    snack: [
+                        {name: "Фрукты", calories: 80, protein: 1, fat: 0, carbs: 20},
+                        {name: "Печенье шоколадное", calories: 110, protein: 2, fat: 5, carbs: 16}
+                    ]
                 },
                 wednesday: {
-                    lunch: ["Суп-пюре из тыквы", "Рыба под маринадом с картофелем", "Салат овощной", "Сок"]
+                    breakfast: [
+                        {name: "Сырники с вареньем", calories: 280, protein: 14, fat: 10, carbs: 35},
+                        {name: "Бутерброд с колбасой", calories: 130, protein: 6, fat: 7, carbs: 12},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ],
+                    lunch: [
+                        {name: "Суп-пюре из тыквы", calories: 130, protein: 4, fat: 6, carbs: 16},
+                        {name: "Рыба под маринадом с картофелем", calories: 300, protein: 20, fat: 10, carbs: 30},
+                        {name: "Салат овощной", calories: 55, protein: 2, fat: 0, carbs: 11},
+                        {name: "Сок", calories: 90, protein: 1, fat: 0, carbs: 22}
+                    ],
+                    snack: [
+                        {name: "Пирожок с мясом", calories: 180, protein: 7, fat: 8, carbs: 20},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ]
                 },
                 thursday: {
-                    lunch: ["Суп харчо", "Плов", "Салат из свеклы с черносливом", "Компот"]
+                    breakfast: [
+                        {name: "Каша гречневая с грибами", calories: 200, protein: 8, fat: 7, carbs: 28},
+                        {name: "Бутерброд с сыром", calories: 120, protein: 6, fat: 5, carbs: 15},
+                        {name: "Кофе с молоком", calories: 40, protein: 2, fat: 2, carbs: 5}
+                    ],
+                    lunch: [
+                        {name: "Суп харчо", calories: 150, protein: 9, fat: 6, carbs: 16},
+                        {name: "Плов", calories: 320, protein: 16, fat: 12, carbs: 38},
+                        {name: "Салат из свеклы с черносливом", calories: 80, protein: 2, fat: 0, carbs: 18},
+                        {name: "Компот", calories: 60, protein: 0, fat: 0, carbs: 15}
+                    ],
+                    snack: [
+                        {name: "Булочка с маком", calories: 160, protein: 5, fat: 5, carbs: 25},
+                        {name: "Молоко", calories: 120, protein: 6, fat: 5, carbs: 9}
+                    ]
                 },
                 friday: {
-                    lunch: ["Солянка", "Курица в сливочном соусе с овощами", "Салат цезарь", "Сок"]
-                },
-                saturday: {
-                    lunch: ["Уха по-фински", "Бефстроганов с картофелем", "Салат из капусты с яблоком", "Компот"]
+                    breakfast: [
+                        {name: "Блинчики с красной икрой", calories: 260, protein: 12, fat: 12, carbs: 25},
+                        {name: "Бутерброд с маслом", calories: 100, protein: 3, fat: 5, carbs: 12},
+                        {name: "Чай", calories: 5, protein: 0, fat: 0, carbs: 1}
+                    ],
+                    lunch: [
+                        {name: "Солянка", calories: 170, protein: 12, fat: 8, carbs: 14},
+                        {name: "Курица в сливочном соусе с овощами", calories: 280, protein: 22, fat: 12, carbs: 18},
+                        {name: "Салат цезарь", calories: 180, protein: 8, fat: 12, carbs: 10},
+                        {name: "Сок", calories: 90, protein: 1, fat: 0, carbs: 22}
+                    ],
+                    snack: [
+                        {name: "Фруктовый салат", calories: 70, protein: 1, fat: 0, carbs: 17},
+                        {name: "Печенье", calories: 80, protein: 1, fat: 3, carbs: 12}
+                    ]
                 }
             }
         };
         
-        // Генерация меню
+        // Генерация меню с расчетом КБЖУ
         document.getElementById('generate-btn').addEventListener('click', function() {
             const day = document.getElementById('day-select').value;
             const ageGroup = document.getElementById('age-group').value;
@@ -588,170 +778,136 @@
                 tuesday: "Вторник",
                 wednesday: "Среда",
                 thursday: "Четверг",
-                friday: "Пятница",
-                saturday: "Суббота"
+                friday: "Пятница"
             };
+            
+            let totalCalories = 0;
+            let totalProtein = 0;
+            let totalFat = 0;
+            let totalCarbs = 0;
             
             let menuHTML = `<h3>Меню на ${dayNames[day]} (${document.getElementById('age-group').options[document.getElementById('age-group').selectedIndex].text})</h3>`;
             
-            // Для младших классов показываем завтрак и обед
-            if (ageGroup === 'elementary') {
-                menuHTML += `<div class="menu-category">
-                    <h3>Завтрак</h3>`;
-                menu.breakfast.forEach(item => {
-                    menuHTML += `<div class="menu-item">${item}</div>`;
-                });
-                menuHTML += `</div>`;
-            }
+            // Завтрак
+            menuHTML += `<div class="menu-category">
+                <h3>Завтрак</h3>`;
+            menu.breakfast.forEach(item => {
+                menuHTML += `<div class="menu-item">${item.name}</div>`;
+                totalCalories += item.calories;
+                totalProtein += item.protein;
+                totalFat += item.fat;
+                totalCarbs += item.carbs;
+            });
+            menuHTML += `</div>`;
             
-            // Для всех классов показываем обед
+            // Обед
             menuHTML += `<div class="menu-category">
                 <h3>Обед</h3>`;
             menu.lunch.forEach(item => {
-                menuHTML += `<div class="menu-item">${item}</div>`;
+                menuHTML += `<div class="menu-item">${item.name}</div>`;
+                totalCalories += item.calories;
+                totalProtein += item.protein;
+                totalFat += item.fat;
+                totalCarbs += item.carbs;
             });
             menuHTML += `</div>`;
+            
+            // Полдник
+            menuHTML += `<div class="menu-category">
+                <h3>Полдник</h3>`;
+            menu.snack.forEach(item => {
+                menuHTML += `<div class="menu-item">${item.name}</div>`;
+                totalCalories += item.calories;
+                totalProtein += item.protein;
+                totalFat += item.fat;
+                totalCarbs += item.carbs;
+            });
+            menuHTML += `</div>`;
+            
+            // Блок с КБЖУ
+            menuHTML += `
+                <div class="nutrition-info">
+                    <h3>Пищевая ценность меню (КБЖУ)</h3>
+                    <div class="nutrition-values">
+                        <div class="nutrition-value">
+                            <div class="value">${totalCalories}</div>
+                            <div class="label">Калории (ккал)</div>
+                        </div>
+                        <div class="nutrition-value">
+                            <div class="value">${totalProtein}</div>
+                            <div class="label">Белки (г)</div>
+                        </div>
+                        <div class="nutrition-value">
+                            <div class="value">${totalFat}</div>
+                            <div class="label">Жиры (г)</div>
+                        </div>
+                        <div class="nutrition-value">
+                            <div class="value">${totalCarbs}</div>
+                            <div class="label">Углеводы (г)</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        <strong>Рекомендуемые нормы для ${document.getElementById('age-group').options[document.getElementById('age-group').selectedIndex].text}:</strong><br>
+                        ${getRecommendedNutrition(ageGroup)}
+                    </p>
+                </div>
+            `;
             
             menuContainer.innerHTML = menuHTML;
         });
         
-        // Система рейтинга
-        const ratingInput = document.getElementById('rating-input');
-        const ratingValue = document.getElementById('rating');
-        const stars = ratingInput.querySelectorAll('span');
-        
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const value = parseInt(this.getAttribute('data-value'));
-                ratingValue.value = value;
-                
-                // Обновляем отображение звезд
-                stars.forEach((s, index) => {
-                    if (index < value) {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
-                    }
-                });
-            });
-        });
-        
-        // Загрузка отзывов из localStorage
-        function loadSuggestions() {
-            const suggestionsList = document.getElementById('suggestions-list');
-            const savedSuggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-            
-            if (savedSuggestions.length === 0) {
-                suggestionsList.innerHTML = '<div class="no-suggestions"><p>Пока нет отзывов. Будьте первым, кто оставит отзыв!</p></div>';
-                return;
+        // Функция для получения рекомендуемых норм питания
+        function getRecommendedNutrition(ageGroup) {
+            switch(ageGroup) {
+                case 'elementary':
+                    return "Калории: 1800-2000 ккал, Белки: 60-70 г, Жиры: 60-70 г, Углеводы: 250-280 г";
+                case 'middle':
+                    return "Калории: 2200-2500 ккал, Белки: 75-85 г, Жиры: 75-85 г, Углеводы: 300-350 г";
+                case 'high':
+                    return "Калории: 2600-3000 ккал, Белки: 90-100 г, Жиры: 90-100 г, Углеводы: 350-400 г";
+                default:
+                    return "";
             }
-            
-            // Сортируем отзывы по дате (новые сначала)
-            savedSuggestions.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            let suggestionsHTML = '';
-            savedSuggestions.forEach(suggestion => {
-                const roleNames = {
-                    student: "ученик",
-                    parent: "родитель",
-                    teacher: "учитель"
-                };
-                
-                const typeNames = {
-                    suggestion: "Предложение",
-                    review: "Отзыв",
-                    complaint: "Жалоба"
-                };
-                
-                // Форматируем дату
-                const date = new Date(suggestion.date);
-                const formattedDate = date.toLocaleDateString('ru-RU', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                });
-                
-                // Создаем звезды рейтинга
-                let starsHTML = '';
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= suggestion.rating) {
-                        starsHTML += '<span class="star">★</span>';
-                    } else {
-                        starsHTML += '<span class="empty-star">★</span>';
-                    }
-                }
-                
-                suggestionsHTML += `
-                    <div class="suggestion">
-                        <div class="suggestion-header">
-                            <span>${suggestion.name} (${roleNames[suggestion.role]})</span>
-                            <span class="suggestion-category">${typeNames[suggestion.type]}</span>
-                        </div>
-                        <div class="suggestion-rating">
-                            ${starsHTML}
-                        </div>
-                        <p>${suggestion.message}</p>
-                        <div class="suggestion-date">${formattedDate}</div>
-                    </div>
-                `;
-            });
-            
-            suggestionsList.innerHTML = suggestionsHTML;
         }
         
-        // Обработка формы отзывов
+        // Обработка формы предложений
         document.getElementById('suggestion-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const name = document.getElementById('name').value;
             const role = document.getElementById('role').value;
             const type = document.getElementById('suggestion-type').value;
-            const rating = parseInt(document.getElementById('rating').value);
             const message = document.getElementById('message').value;
             
-            // Проверяем, что рейтинг установлен
-            if (rating === 0) {
-                alert('Пожалуйста, поставьте оценку');
-                return;
-            }
-            
-            // Создаем объект отзыва
-            const suggestion = {
-                name,
-                role,
-                type,
-                rating,
-                message,
-                date: new Date().toISOString()
+            const roleNames = {
+                student: "ученик",
+                parent: "родитель",
+                teacher: "учитель"
             };
             
-            // Получаем существующие отзывы из localStorage
-            const savedSuggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
+            const typeNames = {
+                suggestion: "Предложение",
+                review: "Отзыв",
+                complaint: "Жалоба"
+            };
             
-            // Добавляем новый отзыв
-            savedSuggestions.push(suggestion);
+            const suggestionHTML = `
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span>${name} (${roleNames[role]})</span>
+                        <span class="suggestion-category">${typeNames[type]}</span>
+                    </div>
+                    <p>${message}</p>
+                </div>
+            `;
             
-            // Сохраняем обратно в localStorage
-            localStorage.setItem('suggestions', JSON.stringify(savedSuggestions));
-            
-            // Обновляем список отзывов
-            loadSuggestions();
+            document.getElementById('suggestions-list').insertAdjacentHTML('afterbegin', suggestionHTML);
             
             // Очистка формы
             document.getElementById('suggestion-form').reset();
             
-            // Сбрасываем рейтинг
-            ratingValue.value = 0;
-            stars.forEach(star => star.classList.remove('active'));
-            
-            alert('Спасибо за ваш отзыв! Он был успешно добавлен.');
-        });
-        
-        // Загружаем отзывы при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            loadSuggestions();
+            alert('Спасибо за ваше предложение! Мы его рассмотрим.');
         });
     </script>
 </body>
 </html>
-
